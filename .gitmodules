@@ -1,0 +1,3 @@
+[submodule "projectx"]
+	path = projectx
+	url = https://github.com/SelvinPL/projectx.git
