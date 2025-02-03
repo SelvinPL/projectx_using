@@ -1,0 +1,35 @@
+name: Autoupdate
+on:
+  push:
+env:
+  VERSION: 0.0.2
+jobs:
+  build:
+    name: Autoupdate RGBDS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: '0'
+      - name: Create branch
+        run: |
+          git checkout -b feature/autoupdate_${{env.VERSION}}
+      - name: Checkout new RGBDS version
+        run: |
+          cd projectx
+          git checkout ${{env.VERSION}}
+          cd ..
+      - name: Commit autoupdate
+        run: |
+          git config --global user.name 'Github Action' 
+          git config --global user.email 'githubaction@example.com'
+          git add .
+          git commit -m "Autoupdate RGBDS ${{env.VERSION}}"
+          git push origin feature/autoupdate_${{env.VERSION}}
+      - name: Create pull request
+        run: |
+          gh pr create -H feature/autoupdate_${{env.VERSION}} -B master --title 'Autoupdate RGBDS ${{env.VERSION}}' --body 'Autoupdate RGBDS ${{env.VERSION}}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
