@@ -1,12 +1,13 @@
 name: Autoupdate
 on:
-  push:
-env:
-  VERSION: 0.0.2
+  repository_dispatch:
+    types: [rgbds_release]
 jobs:
   build:
     name: Autoupdate RGBDS
     runs-on: ubuntu-latest
+    env:
+        VERSION : ${{ github.event.client_payload.version }}
     steps:
       - name: Checkout repository and submodules
         uses: actions/checkout@v2
