@@ -22,14 +22,12 @@ jobs:
           cd projectx
           git checkout ${{env.VERSION}}
           cd ..
-      # do we need this code vvvvvvvv
-      # - name: Commit autoupdate
-      #   run: |
-      #     git config --global user.name 'Github Action' 
-      #     git config --global user.email 'githubaction@example.com'
-      #     git add .
-      #     git commit -m "Autoupdate RGBDS ${{env.VERSION}}"
-      #     git push origin feature/autoupdate_${{env.VERSION}}
+      - name: Commit autoupdate
+        run: |
+          git config --global user.name 'Github Action' 
+          git config --global user.email 'githubaction@example.com'
+          git commit -am "Autoupdate RGBDS ${{env.VERSION}}"
+          git push origin feature/autoupdate_${{env.VERSION}}
       - name: Create pull request
         run: |
           gh pr create -H feature/autoupdate_${{env.VERSION}} -B master --title 'Autoupdate RGBDS ${{env.VERSION}}' --body 'Autoupdate RGBDS ${{env.VERSION}}'
