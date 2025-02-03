@@ -1,12 +1,15 @@
 name: Autoupdate
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        required: true
 jobs:
   build:
     name: Autoupdate RGBDS
     runs-on: ubuntu-latest
     env:
-        VERSION : ${{ github.event.client_payload.version }}
+        VERSION : ${{ github.event.inputs.version }}
     steps:
       - name: Checkout repository and submodules
         uses: actions/checkout@v2
