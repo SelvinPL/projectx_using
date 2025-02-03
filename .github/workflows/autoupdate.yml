@@ -1,7 +1,6 @@
 name: Autoupdate
 on:
-  repository_dispatch:
-    types: [rgbds_release]
+  workflow_dispatch:
 jobs:
   build:
     name: Autoupdate RGBDS
